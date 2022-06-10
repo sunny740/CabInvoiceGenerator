@@ -81,5 +81,24 @@ namespace CabinInvoiceProblems
             }
             return result / rides.Length;
         }
+        public InvoiceSummary CalculateMultipleRideSummery(Ride[] ride)
+        {
+            double result = 0.0d;
+            try
+            {
+                foreach (var data in ride)
+                {
+                    result += calculateFair((int)data.distance, (int)data.time);
+                }
+            }
+            catch (CabInvoiceException)
+            {
+                if (ride == null)
+                {
+                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDES, "Rides are Null");
+                }
+            }
+            return new InvoiceSummary(ride.Length, result);
+        }
     }
 }
