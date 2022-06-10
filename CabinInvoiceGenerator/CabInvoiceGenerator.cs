@@ -62,5 +62,24 @@ namespace CabinInvoiceProblems
             return Math.Max(Fair, Min_Fair);
 
         }
+        public double CalculateMultipleRide(Ride[] rides)
+        {
+            double result = 0.0d;
+            try
+            {
+                foreach (var data in rides)
+                {
+                    result += calculateFair((int)data.distance, (int)data.time);
+                }
+            }
+            catch (CabInvoiceException)
+            {
+                if (rides == null)
+                {
+                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDES, "Rides are Null");
+                }
+            }
+            return result / rides.Length;
+        }
     }
 }
