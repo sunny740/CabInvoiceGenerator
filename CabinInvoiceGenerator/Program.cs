@@ -9,7 +9,7 @@ public class Program
         bool check = true;
         while (check)
         {
-            Console.WriteLine("1. Display Fair Of Cab\n2. Display Fair Cab Of Multiple Rides\n3. Display Invoice Summary");
+            Console.WriteLine("1. Display Fair Of Cab\n2. Display Fair Cab Of Multiple Rides\n3. Display Invoice Summary\n4. Get the list of Rides From The RideRepository\n");
             Console.WriteLine("\nEnter The Above Option");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
@@ -31,6 +31,15 @@ public class Program
                     Ride[] rides1 = { new Ride(15, 10), new Ride(35, 35), new Ride(25, 15), new Ride(15, 15), new Ride(50, 60) };
                     InvoiceSummary results = cabInvoice.CalculateMultipleRideSummery(rides1);
                     Console.WriteLine("Total Number Of Rides:->" + results.totalNumberOfRides + "\n" + "Total Fare of Cab:-> " + results.totalFair + "\n" + "Average Fare Of Cab :-> " + results.averageFair);
+                    break;
+                case 4:
+                    CabInvoiceGenerator invoiceSummary = new CabInvoiceGenerator(RideType.NORMAL);
+                    Ride[] ride = { new Ride(15, 10), new Ride(35, 35), new Ride(25, 15), new Ride(15, 15), new Ride(50, 60) };
+                    string userId = "2001abc";
+                    invoiceSummary.MapUserId(userId, ride);
+
+                    InvoiceSummary summary = invoiceSummary.GetRideInvoiceSummary("2001abc");
+                    Console.WriteLine("Total Number of rides" + summary.totalNumberOfRides + "\n" + "Total Fair" + summary.totalFair + "\n" + "Average fair:->" + summary.averageFair);
                     break;
                 default:
                     Console.WriteLine("Enter Correct Option");
