@@ -9,7 +9,7 @@ public class Program
         bool check = true;
         while (check)
         {
-            Console.WriteLine("1. Display Fair Of Cab\n2. Display Fair Cab Of Multiple Rides\n3. Display Invoice Summary\n4. Get the list of Rides From The RideRepository\n");
+            Console.WriteLine("1. Display Fair Of Cab\n2. Display Fair Cab Of Multiple Rides\n3. Display Invoice Summary\n4. Get the list of Rides From The RideRepository\n5. Premium Rides(Bonus)\n");
             Console.WriteLine("\nEnter The Above Option");
             int option = Convert.ToInt32(Console.ReadLine());
             switch (option)
@@ -39,10 +39,17 @@ public class Program
                     invoiceSummary.MapUserId(userId, ride);
 
                     InvoiceSummary summary = invoiceSummary.GetRideInvoiceSummary("2001abc");
-                    Console.WriteLine("Total Number of rides" + summary.totalNumberOfRides + "\n" + "Total Fair" + summary.totalFair + "\n" + "Average fair:->" + summary.averageFair);
+                    Console.WriteLine("Total Number of rides" + summary.totalNumberOfRides + "\n" + "Total Fare" + summary.totalFair + "\n" + "Average fare:->" + summary.averageFair);
+                    break;
+                case 5:
+                    CabInvoiceGenerator preInvoice = new CabInvoiceGenerator(RideType.PREMIER);
+                    Ride[] preRides = { new Ride(15, 10), new Ride(35, 35), new Ride(25, 15), new Ride(15, 15), new Ride(50, 60) };
+                    InvoiceSummary preInvoSummary = preInvoice.InvoiceSummaryForPremiumRides(preRides);
+                    Console.WriteLine("Total Number of Rides:->" + preInvoSummary.totalNumberOfRides + "\n" + "Total Fare:->" + preInvoSummary.totalFair + "\n" + "Average Fare:->" + preInvoSummary.averageFair);
+
                     break;
                 default:
-                    Console.WriteLine("Enter Correct Option");
+                    Console.WriteLine("Enter Correct Option\n");
                     break;
             }
         }

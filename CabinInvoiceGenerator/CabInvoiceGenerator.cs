@@ -111,5 +111,24 @@ namespace CabinInvoiceProblems
             Ride[] result = this.repository.GetRide(userId);
             return CalculateMultipleRideSummery(result);
         }
+        public InvoiceSummary InvoiceSummaryForPremiumRides(Ride[] rides)
+        {
+            double result = 0.0d;
+            try
+            {
+                foreach (var data in rides)
+                {
+                    result = calculateFair((int)data.distance, (int)data.time);
+                }
+            }
+            catch (CabInvoiceException)
+            {
+                if (rides == null)
+                {
+                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDES, "Rides are Null");
+                }
+            }
+            return new InvoiceSummary(rides.Length, result);
+        }
     }
 }
